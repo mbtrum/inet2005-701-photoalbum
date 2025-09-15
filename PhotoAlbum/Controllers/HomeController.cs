@@ -8,6 +8,7 @@ namespace PhotoAlbum.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        // My Home Controller
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
