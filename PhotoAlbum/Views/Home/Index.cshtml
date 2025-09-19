@@ -1,5 +1,21 @@
-﻿@{
+﻿@model List<PhotoAlbum.Models.Photo>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <h1>Photo Album</h1>
+
+@foreach (var photo in Model)
+{
+    <div>
+        <h2>@photo.Title</h2>
+        <p>
+            @photo.PhotoId<br />
+            @photo.Description<br />
+            @photo.PublishDate<br />
+            @photo.Filename
+        </p>
+    </div>
+}
+

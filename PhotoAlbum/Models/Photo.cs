@@ -15,6 +15,6 @@
         public DateTime PublishDate { get; set; }
 
         // Navigation Property (code)
-        public List<Tag>? Tags { get; set; }
+        public List<Tag>? Tags { get; set; } //nullable
     }
 }
