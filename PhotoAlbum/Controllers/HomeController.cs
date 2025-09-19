@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using PhotoAlbum.Models;
 
 namespace PhotoAlbum.Controllers
 {
@@ -16,18 +15,20 @@ namespace PhotoAlbum.Controllers
 
         public IActionResult Index()
         {
+            // List of 3 photos 
+
+
+            // Pass the list into the View
+
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Details(int id)
         {
-            return View();
-        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            int photoId = id;
+
+            return View();
         }
     }
 }
