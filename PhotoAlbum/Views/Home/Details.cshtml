@@ -1,7 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model PhotoAlbum.Models.Photo
+
 @{
+    ViewData["Title"] = "Details";
 }
 
-<h1>Photo Details</h1>
+
+<h1 class="mb-3">Photo Details</h1>
+
+<div class="w-50">
+    <img src="/images/@Model.Filename" alt="@Model.Title" class="img-fluid" />
+</div>
+
+<table class="table w-50">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.PhotoId)</th>
+        <td>@Html.DisplayFor(model => model.PhotoId)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <td>@Html.DisplayFor(model => model.Title)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Description)</th>
+        <td>@Html.DisplayFor(model => model.Description)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.PublishDate)</th>
+        <td>@Model.PublishDate.ToString("MMM d, yyyy")</td>
+    </tr>
+</table>
+
+<p>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Go back</a>
+</p>

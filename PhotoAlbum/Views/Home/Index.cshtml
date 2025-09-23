@@ -4,18 +4,46 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Photo Album</h1>
+<h1 class="mb-3">Photo Album</h1>
 
-@foreach (var photo in Model)
-{
-    <div>
-        <h2>@photo.Title</h2>
-        <p>
-            @photo.PhotoId<br />
-            @photo.Description<br />
-            @photo.PublishDate<br />
-            @photo.Filename
-        </p>
-    </div>
-}
+<table class="table w-50">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().PhotoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().PublishDate)
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var photo in Model)
+        {
+            <tr>
+                <td>
+                    <img src="images/@photo.Filename" alt="@photo.Title" class="thumbnail" />
+                </td>
+                <td>
+                    @Html.DisplayFor(model => photo.PhotoId)
+                    </td>
+                <td>
+                    @Html.DisplayFor(model => photo.Title)
+                    </td>
+                <td>
+                    @photo.PublishDate.ToString("MMM d, yyyy")
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="Details" asp-route-id="@photo.PhotoId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
