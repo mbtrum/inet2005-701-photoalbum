@@ -1,18 +1,15 @@
 ﻿@model PhotoAlbum.Models.Photo
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
 
-<h1>Photo Details</h1>
+<h1>Delete</h1>
 
+<h3>Are you sure you want to delete this?</h3>
 <div>
+    <h4>Photo</h4>
     <hr />
-
-    <div class="w-50">
-        <img src="/images/@Model.Filename" alt="@Model.Title" class="img-fluid" />
-    </div>
-
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
@@ -39,8 +36,10 @@
             @Html.DisplayFor(model => model.PublishDate)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model?.PhotoId">Edit</a> |
-    <a asp-controller="Home" asp-action="Index">Back to List</a>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PhotoId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
 </div>

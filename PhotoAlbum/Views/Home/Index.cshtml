@@ -1,49 +1,59 @@
-﻿@model List<PhotoAlbum.Models.Photo>
+﻿@model IEnumerable<PhotoAlbum.Models.Photo>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Index";
 }
 
-<h1 class="mb-3">Photo Album</h1>
+<h1>All Photos</h1>
 
-<table class="table w-50">
+<p>
+    <a asp-controller="Photos" asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
     <thead>
         <tr>
             <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.First().PhotoId)
+                @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().Title)
+                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().PublishDate)
+                @Html.DisplayNameFor(model => model.Filename)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.PublishDate)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var photo in Model)
-        {
-            <tr>
-                <td>
-                    <img src="images/@photo.Filename" alt="@photo.Title" class="thumbnail" />
-                </td>
-                <td>
-                    @Html.DisplayFor(model => photo.PhotoId)
-                    </td>
-                <td>
-                    @Html.DisplayFor(model => photo.Title)
-                    </td>
-                <td>
-                    @photo.PublishDate.ToString("MMM d, yyyy")
-                </td>
-                <td>
-                    <a asp-controller="Home" asp-action="Details" asp-route-id="@photo.PhotoId">Details</a>
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <th>
+                <img src="/images/@item.Filename" alt="@item.Title" class="thumbnail" />
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Filename)
+            </td>
+            <td>
+                @* @Html.DisplayFor(modelItem => item.PublishDate) *@
+                @item.PublishDate.ToString("MMM dd, yyyy")
+            </td>
+            <td>
+                <a asp-controller="Photos" asp-action="Edit" asp-route-id="@item.PhotoId">Edit</a> |
+                <a asp-controller="Home" asp-action="Details" asp-route-id="@item.PhotoId">Details</a> |
+                <a asp-controller="Photos" asp-action="Delete" asp-route-id="@item.PhotoId">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>
-

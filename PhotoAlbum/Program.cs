@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PhotoAlbum.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<PhotoAlbumContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PhotoAlbumContext") ?? throw new InvalidOperationException("Connection string 'PhotoAlbumContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
