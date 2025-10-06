@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhotoAlbum.Models
 {
@@ -20,5 +21,10 @@ namespace PhotoAlbum.Models
 
         // Navigation Property (code)
         public List<Tag>? Tags { get; set; } //nullable
+
+        // Image file
+        [NotMapped]
+        [Display(Name = "Photo")]
+        public IFormFile? FormFile { get; set; } //nullable
     }
 }

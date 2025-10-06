@@ -30,7 +30,7 @@ namespace PhotoAlbum.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PhotoId,Title,Description,Filename")] Photo photo)
+        public async Task<IActionResult> Create([Bind("PhotoId,Title,Description,FormFile")] Photo photo)
         {
             // Set the publish date
             photo.PublishDate = DateTime.Now;
@@ -38,6 +38,32 @@ namespace PhotoAlbum.Controllers
             // Validate form input
             if (ModelState.IsValid)
             {
+                //
+                // Step 1: save the file
+                //
+                if (photo.FormFile != null)
+                {
+                    // Create a unique filename using a GUID
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(photo.FormFile.FileName); // e.g. 8D8AC610-566D-4EF0-9C22-186B2A5ED793.jpg
+
+                    // Set the filename from upload file
+                    photo.Filename = filename;
+
+                    // Use Path.Combine to get the file path to save file to
+                    string saveFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos", filename);                    
+
+                    // Save file
+                    using(var fileStream = new FileStream(saveFilePath, FileMode.Create))
+                    {
+                        await photo.FormFile.CopyToAsync(fileStream);
+                    }
+                }
+
+
+
+                //
+                // Step 2: save the record in db
+                //
                 _context.Add(photo);
 
                 await _context.SaveChangesAsync();
