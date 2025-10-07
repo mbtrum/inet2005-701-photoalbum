@@ -39,7 +39,7 @@ namespace PhotoAlbum.Controllers
             if (ModelState.IsValid)
             {
                 //
-                // Step 1: save the file
+                // Step 1: save the file (optionally)
                 //
                 if (photo.FormFile != null)
                 {
@@ -50,7 +50,7 @@ namespace PhotoAlbum.Controllers
                     photo.Filename = filename;
 
                     // Use Path.Combine to get the file path to save file to
-                    string saveFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos", filename);                    
+                    string saveFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos", filename);    // e.g., C:\Users\... /home/app/                
 
                     // Save file
                     using(var fileStream = new FileStream(saveFilePath, FileMode.Create))
@@ -58,8 +58,6 @@ namespace PhotoAlbum.Controllers
                         await photo.FormFile.CopyToAsync(fileStream);
                     }
                 }
-
-
 
                 //
                 // Step 2: save the record in db
@@ -97,7 +95,7 @@ namespace PhotoAlbum.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PhotoId,Title,Description,Filename,PublishDate")] Photo photo)
+        public async Task<IActionResult> Edit(int id, [Bind("PhotoId,Title,Description,Filename,PublishDate,FormFile")] Photo photo)
         {
             if (id != photo.PhotoId)
             {
@@ -106,10 +104,26 @@ namespace PhotoAlbum.Controllers
 
             if (ModelState.IsValid)
             {
+                //
+                // Step 1: save the new file (optionally)
+                //
+                if(photo.FormFile != null)
+                {
+                    // 1. Change the filename in photo.Filename
+
+                    // 2. Save the new file
+
+                    // 3. Delete the old file
+                }
+
+                //
+                // Step 2: save the record
+                //
+
                 try
                 {
                     _context.Update(photo);
-
+                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

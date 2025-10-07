@@ -19,7 +19,7 @@ namespace PhotoAlbum.Models
         [Display(Name = "Published")]
         public DateTime PublishDate { get; set; }
 
-        // Navigation Property (code)
+        // Navigation Property (code)        
         public List<Tag>? Tags { get; set; } //nullable
 
         // Image file

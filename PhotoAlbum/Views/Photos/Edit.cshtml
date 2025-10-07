@@ -4,15 +4,15 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit Photo</h1>
 
-<h4>Photo</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PhotoId" />
+            <input type="hidden" asp-for="Filename" />
+
             <div class="mb-3">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
@@ -23,11 +23,23 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+
             <div class="mb-3">
+                <img src="/photos/@Model.Filename" alt="@Model.Title" class="img-fluid" />
+            </div>
+
+            <!-- File input! -->
+            <div class="mb-3">
+                <label class="control-label">Change Photo</label>
+                <input type="file" asp-for="FormFile" class="form-control" />
+                <span asp-validation-for="FormFile" class="text-danger"></span>
+            </div>
+
+            @* <div class="mb-3">
                 <label asp-for="Filename" class="control-label"></label>
                 <input asp-for="Filename" class="form-control" />
                 <span asp-validation-for="Filename" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="mb-3">
                 <label asp-for="PublishDate" class="control-label"></label>
                 <input asp-for="PublishDate" class="form-control" readonly="readonly" />
@@ -41,7 +53,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
