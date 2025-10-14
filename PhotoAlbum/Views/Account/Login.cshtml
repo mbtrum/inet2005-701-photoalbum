@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Login</h1>
+
+@if(ViewBag.ErrorMessage != null)
+{
+    <p class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </p>
+}
+
+<form asp-action="Login" class="w-25">
+    
+    <div class="mb-3">
+        <label for="Username" class="control-label">Username</label>
+        <input type="text" id="username" name="username" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label for="Password" class="control-label">Password</label>
+        <input type="password" name="password"  class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+
+</form>

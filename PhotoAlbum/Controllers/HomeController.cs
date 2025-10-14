@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhotoAlbum.Data;
@@ -6,18 +7,20 @@ using System.Diagnostics;
 
 namespace PhotoAlbum.Controllers
 {
+    // restricted access
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly PhotoAlbumContext _context;
-
+       
         // My Home Controller
         public HomeController(ILogger<HomeController> logger, PhotoAlbumContext context)
         {
             _logger = logger;
             _context = context;
         }
-
+                
         // GET: Photos
         public async Task<IActionResult> Index()
         {
