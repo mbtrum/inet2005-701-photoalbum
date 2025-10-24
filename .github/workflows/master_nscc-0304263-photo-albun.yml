@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - nscc-0304263-photo-album
+name: Build and deploy ASP.Net Core app to Azure Web App - nscc-0304263-photo-albun
 
 on:
   push:
@@ -51,15 +51,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_EDF2BA220F1E473CB557E59381F9D2D9 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4121B8B6626A48EE9B8F0506B88D5795 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8EB4196556644EA09E31B796C9FF3F53 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_783B6203AC2649AE8AD4D2BF38DD4594 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3AF7691F33834A17A95630476E6B41BE }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_41E2C33D6ABF4EB7A17B995EC426CD73 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'nscc-0304263-photo-album'
+          app-name: 'nscc-0304263-photo-albun'
           slot-name: 'Production'
           package: .
           
