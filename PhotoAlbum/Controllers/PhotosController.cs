@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,10 +18,17 @@ namespace PhotoAlbum.Controllers
     public class PhotosController : Controller
     {
         private readonly PhotoAlbumContext _context;
+        private readonly IConfiguration _configuration;
+        private readonly BlobContainerClient _containerClient;
 
-        public PhotosController(PhotoAlbumContext context)
+        public PhotosController(PhotoAlbumContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
+
+            var connectionString = _configuration["AzureStorage"];
+            var containerName = "photo-album-ulploads";
+            _containerClient = new BlobContainerClient(connectionString, containerName);
         }        
 
         // GET: Photos/Create
@@ -46,20 +55,24 @@ namespace PhotoAlbum.Controllers
                 //
                 if (photo.FormFile != null)
                 {
-                    // Create a unique filename using a GUID
-                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(photo.FormFile.FileName); // e.g. 8D8AC610-566D-4EF0-9C22-186B2A5ED793.jpg
+                    //
+                    // Upload file to Azure Blob Storage
+                    //
 
-                    // Set the filename from upload file
-                    photo.Filename = filename;
+                    var fileUpload = photo.FormFile;
 
-                    // Use Path.Combine to get the file path to save file to
-                    string saveFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "photos", filename);    // e.g., C:\Users\... /home/app/                
+                    // the name of the file to save in Azure (guid + fileName)
+                    string blobName = Guid.NewGuid().ToString() + "_" + fileUpload.FileName;
 
-                    // Save file
-                    using(var fileStream = new FileStream(saveFilePath, FileMode.Create))
+                    var blobClient = _containerClient.GetBlobClient(blobName);
+
+                    using (var stream = fileUpload.OpenReadStream())
                     {
-                        await photo.FormFile.CopyToAsync(fileStream);
+                        await blobClient.UploadAsync(stream, new BlobHttpHeaders { ContentType = fileUpload.ContentType });
                     }
+
+                    // Get the URL of the blob file
+                    photo.Filename = blobClient.Uri.ToString();
                 }
 
                 //

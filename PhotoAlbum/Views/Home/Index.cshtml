@@ -21,9 +21,6 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Filename)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.PublishDate)
             </th>
             <th></th>
@@ -33,16 +30,13 @@
 @foreach (var item in Model) {
         <tr>
             <th>
-                <img src="/photos/@item.Filename" alt="@item.Title" class="thumbnail" />
+                <img src="@item.Filename" alt="@item.Title" class="thumbnail" />
             </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Filename)
             </td>
             <td>
                 @* @Html.DisplayFor(modelItem => item.PublishDate) *@
