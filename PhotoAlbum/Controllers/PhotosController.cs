@@ -27,7 +27,7 @@ namespace PhotoAlbum.Controllers
             _configuration = configuration;
 
             var connectionString = _configuration["AzureStorage"];
-            var containerName = "photo-album-ulploads";
+            var containerName = "photo-album-uploads";
             _containerClient = new BlobContainerClient(connectionString, containerName);
         }        
 
